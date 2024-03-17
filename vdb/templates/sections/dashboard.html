@@ -1,0 +1,110 @@
+{%extends 'pages/base.html'%}
+{%load static%}
+{% block body %}
+<div id="dashboard-container">
+    <input id="vf_year_target_percent_completed" hidden 
+        {% if vf_year_target_percent_completed != None %} 
+            value={{vf_year_target_percent_completed}}
+        {% endif %} type="number">
+    <div id="dashboard-left">
+        <div class="dashboard-box">
+            <!-- <div id="students-impacted-top-container">Since <span id="year"><input placeholder="2014"></span></div> -->
+            <div id="students-impacted-top-container">
+                {% if show_all_btn %} <button class="impact-btn" onclick="since_2014()">All</button> {% endif %}
+                <div id="students-impacted-top-container">{% if show_all_btn %} Showing {% else %} Since {% endif %} <span id="year">
+                    <input placeholder="2014" id="year-val" value="{{year_val}}">
+                    <div class="icon-container" onclick="change_year()">
+                        <img src="{% static 'icons/filter.png'%}" width="100%"/>
+                    </div>
+                </span></div>
+            </div>
+            <svg class="progress" width="190" height="190" viewBox="0 0 100 100">
+                <defs>
+                  <clipPath id="progress-mask">
+                    <circle cx="50" cy="50" r="40" />
+                  </clipPath>
+                </defs>
+                <circle class="progress-ring" cx="50" cy="50" r="40"></circle>
+                <circle class="progress-ring-remaining" cx="50" cy="50" r="40" clip-path="url(#progress-mask)"></circle>
+                <foreignObject x="0" y="0" width="100%" height="100%">
+                    <!-- Place your HTML content here -->
+                    <div style="display: flex;flex-direction:column; justify-content: center; align-items: center; width: 100%; height: 100%; font-family: Arial, sans-serif; font-size: 16px; text-align: center;">
+                        <div id="total_students" style="font-size: 15px !important;">{{students_count}}</div>
+                        <div class="dashboard-caption" style="font-size: 6px !important;">
+                            {% if not show_all_btn %} From 2014 till date  {% else %} Total students impacted {% endif %}
+                        </div>
+                    </div>
+                  </foreignObject>
+              </svg>
+
+              
+            <div class="bottom-group">
+                <div class="icon-container">
+                    <img src="{%static 'icons/smiley_face.svg'%}" width="100%"/>
+                </div>
+                <div id="right-group">
+                    <p>Students Impacted</p>
+                    <div class="icon-container arrow">
+                       <a href="{%url 'programs'%}"><img src="{%static '/icons/right-arrow.svg'%}" width="100%"/></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-box left-align">
+            <div id="all-staff-head">
+                <div class="dashboard-caption">All staff since 2014</div>
+                <div class="icon-container user-icon">
+                    <img src="{%static '/icons/user.svg'%}" width="100%"/>
+                </div>
+            </div>
+            <div id="total_number_of_staff">{{staffs_count}}</div>
+            <div id="staff-bold">Our Staff</div>
+
+            <div class="bottom-group-2">
+                <p class="dashboard-caption">View our Staff</p>
+                <div class="icon-container arrow">
+                    <a href="{%url 'staff'%}"><img src="{%static 'icons/right-arrow.svg'%}" width="100%"/></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="dashboard-right">
+        <div class="dashboard-box limited">
+            <div id="students-impacted-top"> Students From {{ countries_count }} different African Countries</div>
+            <div id="countries">
+                {% if country_data %}
+                    {% for country in country_data %}
+                        <div class="country">
+                            <div class="stat">
+                                <div class="stat-fil" style="height:{{country.percentage}}%;">
+                                <div class="country-count"><p>{{country.count}}</p></div>
+                                </div>
+                            </div>
+                            <div class="dashboard-caption">{{country.name}}</div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="programs-container">
+            <div class="dashboard-box our-program">
+                <p>AFTER SCHOOL STEM CLUBS</p>
+                <div class="program-middle">{{ascg_count}}</div>
+            </div>
+            <div class="dashboard-box our-program">
+                <p>CODING BOOT-CAMP</p>
+                <div class="program-middle">{{cbc_count}}</div>
+            </div>
+            <div class="dashboard-box our-program">
+                <p>STEM SUMMER CAMP</p>
+                <div class="program-middle">{{ssc_count}}</div>
+            </div>
+            <div class="dashboard-box our-program">
+                <p>DECEMBER STEM CAMP</p>
+                <div class="program-middle">{{dsc_count}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{%extends 'pages/base.html' %}
+{%load static%}
+{% block body %}
+
+
+
+<form method="POST" enctype="multipart/form-data">
+	{%csrf_token%}
+		You're about to delete "{{student.first_name}}"
+	{{form.as_p}}
+	<br/>
+	<button class="btn btn-danger btn-lg btn-block">Delete</button>
+</form>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{%extends 'pages/base.html'%}
+{%load static%}
+{% block body %}
+<div class="page-head">
+    <div class="page-head-right">
+        <div class="page-btn add-btn" onclick="open_secodary_sidebar('student-form')">ADD</div>
+        <div class="page-btn ASCG" onclick="">DOWNLOAD</div>
+    </div>
+    <div class="page-head-left">
+        <div id="program-container">
+            <div>Program : </div>
+            <select id="programs" onchange="filter_student()">
+                <option value="all" {% if program == None %} selected {% endif %}>ALL</option>
+                <option value="ASCG" {% if program == "ASCG" %} selected {% endif %}>ASCG</option>
+                <option value="CBC" {% if program == "CBC" %} selected {% endif %}>CBC</option>
+                <option value="SC" {% if program == "SC" %} selected {% endif %}>SC</option>
+                <option value="DSC" {% if program == "DSC" %} selected {% endif %}>DSC</option>
+            </select>
+            <!-- <a href="{% url 'programs' %}?program=ASCG" class="page-btn ASCG">ASCG</a>
+            <a href="{% url 'programs' %}?program=SC" class="page-btn SC">SC</a>
+            <a href="{% url 'programs' %}?program=DSC" class="page-btn SC">DSC</a>
+            <a href="{% url 'programs' %}?program=CBC" class="page-btn CBC">CBC</a> -->
+        </div>
+
+        <div class="page-search">
+            <form action="{% url 'search_students' %}" method="get">
+                <input type="text" name="query" placeholder="search">
+                <button type="submit" class="search-icon">
+                    <img src="{% static 'icons/search.svg' %}" width="100%">
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div id="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>DATE OF BIRTH</th>
+                    <th>SCHOOL</th>
+                    <!-- <th>PHONE</th> -->
+                    <th>EMAIL</th>
+                    <th>PROGRAM</th>
+                    <th>YEAR</th>
+                    <th>COUNTRY</th>
+                    <th></th>
+                </tr>
+                <tr class="space"></tr>
+            </thead>
+            <tbody>
+            {%for student in students%}
+            <tr>
+                <td>{{student.first_name|upper}}</td>
+                <td>{{student.last_name|upper}}</td>
+                <td>{{student.date_of_birth}}</td>
+                <td>{{student.school|upper}}</td>
+                <!-- <td>{{student.phone_number}}</td> -->
+                <td>{{student.email}}</td>
+                <td>{%for program in student.program.all%} {{program.name}}|{%endfor%}</td>
+                <td>{{student.program_year}}</td>
+                <td>{{student.country|upper}}</td>
+                <td>
+                    <div class="table-btns">
+                        <a class="table-btn edit-btn" href="{% url 'programs'%}?edit={{student.id}}&form=student-form">
+                            <img src="{%static 'icons/edit.svg'%}" width="13px"/>
+                        </a>
+                        <div class="table-btn">
+                            <button class="info" onclick="studentDetails({{student.id}})">
+                                <img src="{% static 'icons/more.png' %}" alt="Delete" width="13px">
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+    </div>
+<ul class="pagination">
+        {% if students.has_previous %}
+            <li class="prev-next"><a href="?page={{ students.previous_page_number }}">Previous</a></li>
+        {% else %}
+            <li class="prev-next disabled"><a href="#">Previous</a></li>
+        {% endif %}
+
+        {% for page_num in students.paginator.page_range %}
+            {% if page_num == students.number %}
+                <li class="activebtn"><a href="#">{{ page_num }}</a></li>
+            {% else %}
+                <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if students.has_next %}
+            <li class="prev-next"><a href="?page={{ students.next_page_number }}">Next</a></li>
+        {% else %}
+            <li class="prev-next disabled"><a href="#">Next</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+{% endblock %}

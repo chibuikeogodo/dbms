@@ -1,0 +1,41 @@
+{%extends 'pages/base.html'%}
+{%load static%}
+{% block body %}
+<link rel="stylesheet" href="{%static 'styles/expenses.css'%}">
+    <div class="details-heading-container">
+        <div class="details-heading">
+            <span id="page-name">Program Expenses</span>
+            <span id="grade-year">
+                <input placeholder="Current" id="expense-year" value="{{year}}">
+                <div class="icon-container" onclick="change_expense_year()">
+                    <img src="{% static 'icons/filter.png'%}" width="100%"/>
+                </div>
+            </span>
+        </div>
+    </div>
+
+    <div id="expenses-container">
+        <div id="expenses-heading">
+            <div id="all_columns"></div>
+            <div class="expense-child add-head" id="add-heading" onclick="add_column()">+</div>
+        </div>
+
+        <div id="expenses-body">
+            <div id="expenses-body-row"></div>
+            <div id="expens-total"></div>
+            <div class="expense-child add-head" onclick="add_row()">+ Add row</div>
+        </div>
+
+
+    </div>
+
+    {% if data %}
+        <input hidden id="table_column_data" value="{{data.columns}}"/>
+        <input hidden id="table_row_data" value="{{data.row}}"/>
+    {% else %}
+        <input hidden id="table_column_data" value=""/>
+        <input hidden id="table_row_data" value=""/>
+    {% endif %}
+
+<script src="{%static 'scripts/expenses.js'%}"></script>
+{% endblock %}

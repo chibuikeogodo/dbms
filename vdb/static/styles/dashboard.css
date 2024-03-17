@@ -1,0 +1,407 @@
+#year{
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ad9e9e;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.progress {
+    display: block;
+  }
+  
+  .progress-ring,
+  .progress-ring-remaining {
+    fill: none;
+    stroke-width: 10;
+    stroke-dashoffset: 0;
+    stroke-dasharray: 251.2; /* Circumference of the circle */
+    transform-origin: center;
+    transform: rotate(-90deg); /* Start from the top (90 degrees) */
+  }
+  
+  .progress-ring {
+    stroke: #AFCB08; /* Change this to your first color */
+    clip-path: url(#progress-mask);
+  }
+  
+  .progress-ring-remaining {
+    stroke: #00AEFF; /* Change this to your second color */
+    transition: stroke-dashoffset 0.3s;
+  }
+  
+  .progress-text {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+  }
+  
+  
+  
+
+/* Dashboard */
+
+#dashboard-container{
+    display: flex;
+}
+
+#app-main-section{
+    overflow: auto;
+    height: 100%;
+}
+
+#dashboard-left, #dashboard-right{
+    width:fit-content
+}
+
+.dashboard-box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.dashboard-box select{
+    border: 0;
+}
+
+.dashboard-box:focus-visible, .dashboard-box:active{
+    outline: none;
+}
+
+.limited{
+    width: 100%;
+    /* width: 600px; */
+}
+
+#students-impacted-middle{
+    width:180px;
+    height: 180px;
+    margin:25px 0px;
+    background-image: url("../images/border_total.svg");
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-group{
+    border-top: 1px solid #ad9e9e;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.bottom-group-2{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#students-impacted-top{
+    font-weight: 500;
+    font-size: 14px;
+}
+
+#students-impacted-top-container{
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#students-impacted-top-container input{
+    width: 50px;
+    border:0;
+    margin-right: 5px;
+}
+
+#students-impacted-top-container .icon-container{
+    cursor: pointer;
+}
+
+#students-impacted-top-container input:focus{
+    outline: none;
+}
+
+#qty-container input{
+    width: 30px;
+}
+
+#students-impacted-top-container button{
+    padding: 2px 5px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #ad9e9e;
+    border-radius: 5px;
+}
+
+#total_students{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.dashboard-caption{
+    font-size: 13px;
+    color: #222222;
+}
+
+.icon-container img{
+    width:15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-icon img{
+    width:25px;
+    height: 25px;
+}
+
+#right-group{
+    display: flex;
+    align-items: center;
+}
+
+#right-group p{
+    font-size: 14px;
+}
+
+.arrow{
+    margin-left: 10px;
+    cursor: pointer;
+}
+#all-staff-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+}
+
+#total_number_of_staff{
+    font-size: 20px;
+    margin: 20px 0px;
+    width:200px;
+    font-weight: bold;
+    color: #AFCB08;
+}
+.left-align{
+    display: flex;
+    align-items: flex-start;
+}
+
+#staff-bold{
+    margin-bottom: 0px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+#countries{
+    padding-top: 20px;
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.country{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.stat{
+    width:30px;
+    height: 130px;
+    background-color: #E9ECF1D1;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: end;
+    position: relative;
+}
+
+.stat-fil{
+    width:100%;
+    background-color: #00AEFF;
+    border-radius: 5px;
+}
+
+.country-count{
+    justify-content: center;
+    align-items: center;
+    writing-mode:vertical-rl; 
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    position: absolute;
+    top:0;
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+.country-count p{
+    transform: rotate(180deg);
+}
+
+.stat:hover .country-count{
+    display: flex;
+}
+
+
+#programs-container{
+    display: flex;
+}
+
+.our-program{
+    width:150px;
+    display: flex;
+    height: 150px;
+    justify-content: center;
+}
+
+
+.our-program p{
+    text-align: center;
+    font-size: 13px;
+}
+
+.program-middle{
+    width: 60px;
+    height: 60px;
+    margin: 20px 0px 0px 0px;
+    background-image: url("../images/border_program.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+
+
+@media only screen and (max-width:950px) {
+    #dashboard-container{
+        width: fit-content;
+    }
+
+    .limited{
+        width: 100%;
+    }
+
+    .dashboard-box{
+        margin-right: 20px;
+    }
+}
+
+@media only screen and (max-width:850px) {
+    #dashboard-container{
+        grid-template-columns: .8fr 1fr;
+    }
+
+    #dashboard-left .dashboard-box{
+        width:100
+    }
+
+    #students-impacted-middle{
+        width:150px;
+        height: 150px;
+    }
+
+    #total_number_of_staff{
+        font-size: 20px;
+        margin: 20px 0px;
+        width:150px;
+    }
+
+    .limited{
+        width: 100% !important;
+    }
+
+    #programs-container{
+        flex-wrap: wrap;
+    }
+    
+}
+
+
+@media only screen and (max-width:700px) {
+    #dashboard-container{
+        display: block;
+    }
+    #dashboard-left{
+        display: flex;
+    }
+
+    #dashboard-container, #dashboard-right{
+        width:100%;
+    }
+}
+
+@media only screen and (max-width:500px) {
+    *{
+        font-size: 14px;
+    }
+
+    #total_students,#total_number_of_staff{
+        font-size: 20px;
+    }
+    
+    #dashboard-left{
+        display: block;
+        width: 100%;
+        /* grid-template-columns: 1fr 1fr;
+        gap:15px; */
+    }
+
+    #dashboard-left .dashboard-box, #programs-container .dashboard-box{
+        width: 100%;
+        margin-right: 0px;
+    }
+
+    .program-middle{
+        font-size: 14px;
+    }
+
+    .stat{
+        width: 25px;
+        margin-bottom: 5px;
+    }
+
+    .stat .dashboard-caption{
+        font-size: 12px;
+    }
+
+    #countries{
+        padding-top:25px ;
+    }
+
+    #app-main-section{
+        padding-top:20px ;
+    }
+
+    .dashboard-caption{
+        font-size: 12px;
+    }
+
+    .our-program p{
+        font-size: 13px;
+    }
+}

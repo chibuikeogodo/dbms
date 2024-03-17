@@ -1,0 +1,94 @@
+{%extends 'pages/base.html'%}
+{%load static%}
+{% block body %}
+<div class="page-head">
+    <div class="page-head-right">
+        <div class="page-btn add-btn" onclick="open_secodary_sidebar('volunteer-form')">ADD</div>
+        <div class="page-btn ASCG" onclick="">DOWNLOAD</div>
+    </div>
+    <div class="page-head-left">
+        <div class="btn-group">
+            <div class="page-btn SC">ALL</div>
+            <div class="page-btn ASCG">ACTIVE VOLUNTEERS</div>
+        </div>
+        <div class="page-search">
+            <form>
+                <input type="text" placeholder="search"/>
+                <button class="search-icon">
+                    <img src="{%static 'icons/search.svg'%}" width="100%">
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div id="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>LOCATION</th>
+                    <th>PHONE</th>
+                    <th>EMAIL</th>
+                    <th>STATE DATE</th>
+                    <th>END DATE</th>
+                    <th>PROGRAM</th>
+                    <th></th>
+                </tr>
+                <tr class="space"></tr>
+            </thead>
+            <tbody>
+            {%for volunteer in volunteers%}
+            
+                <tr>
+                    <td>{{volunteer.first_name|upper}}</td>
+                    <td>{{volunteer.last_name|upper}}</td>
+                    <td>{{volunteer.location|upper}}</td>
+                    <td>{{volunteer.phone_number}}</td>
+                    <td>{{volunteer.email}}</td>
+                    <td>{{volunteer.start_date}}</td>
+                    <td>{{volunteer.end_date}}</td>
+                   <td>{%for program in volunteer.program.all%} {{program.name}}|{%endfor%}</td>
+                    <td>
+                        <div class="table-btns">
+                            <div class="table-btn edit-btn">
+                                <img src="{%static 'icons/edit.svg'%}" width="13px"/>
+                            </div>
+                            <div class="table-btn">
+                                <button class="info" onclick="window.location.href='{% url 'volunteer_details' volunteer_id=volunteer.id %}'">
+                                    <img src="{% static 'icons/more.png' %}" alt="View Details" width="13px">
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {%endfor%}
+        </tbody>
+        </table>
+    </div>
+    <ul class="pagination">
+        {% if volunteers.has_previous %}
+            <li class="prev-next"><a href="?page={{ volunteers.previous_page_number }}">Previous</a></li>
+        {% else %}
+            <li class="prev-next disabled"><a href="#">Previous</a></li>
+        {% endif %}
+
+        {% for page_num in volunteers.paginator.page_range %}
+            {% if page_num == volunteers.number %}
+                <li class="activebtn"><a href="#">{{ page_num }}</a></li>
+            {% else %}
+                <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if volunteers.has_next %}
+            <li class="prev-next"><a href="?page={{ volunteers.next_page_number }}">Next</a></li>
+        {% else %}
+            <li class="prev-next disabled"><a href="#">Next</a></li>
+        {% endif %}
+    </ul>
+</div>
+{%endblock%}
+

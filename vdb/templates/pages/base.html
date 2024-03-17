@@ -1,0 +1,228 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Visiola Foundation</title>
+    <link rel="stylesheet" href="{%static 'styles/base.css'%}">
+    <link rel="stylesheet" href="{%static 'styles/table.css'%}">
+    <link rel="stylesheet" href="{%static 'styles/dashboard.css'%}">
+    <link rel="stylesheet" href="{%static 'styles/form_style.css'%}">
+</head>
+
+<body>
+    <div id="app-container">
+        <div id="app-primary-sidebar">
+            <div id="min-nav-close">
+                <img src="{%static 'icons/close.svg'%}" onclick="toggle_navbar(true)"/>
+            </div>
+            <div>
+                <div id="app-primary-sidebar-logo">
+                    <img src="{%static 'images/logo_new.png'%}" width="100%"/>
+                </div>
+                <div id="app-primary-sidebar-links">
+                     <div class="app-primary-sidebar-link">Welcome! {{request.user|upper}}</div>
+                    <div {% if page == "dashboard" %} class="app-primary-sidebar-link active" {%else%}class="app-primary-sidebar-link"{%endif%}><a href="{%url 'home'%}">DASHBOARD</a></div>
+                    <div {% if page == "programs" %} class="app-primary-sidebar-link active" {%else%}class="app-primary-sidebar-link"{%endif%}><a href="{%url 'programs'%}">STUDENTS</a></div>
+                    <div {% if page == "staffs" %} class="app-primary-sidebar-link active" {%else%}class="app-primary-sidebar-link"{%endif%}><a href="{%url 'staff'%}">STAFF</a></div>
+                    <div {% if page == "volunteers" %} class="app-primary-sidebar-link active" {%else%}class="app-primary-sidebar-link"{%endif%}><a href="{%url 'volunteers'%}">VOLUNTEERS</a></div>
+                    <div {% if page == "sponsors" %} class="app-primary-sidebar-link active" {%else%}class="app-primary-sidebar-link"{%endif%}><a href="{%url 'sponsors_page' %}">SPONSORS</a></div>
+                    <div {% if page == "expenses" %} class="app-primary-sidebar-link active" {%else%}class="app-primary-sidebar-link"{%endif%}><a href="{%url 'expenses' %}">PROGRAM EXPENSES</a></div>
+                </div>
+            </div>
+            <div id="logout-btn">
+
+                <div class="app-primary-sidebar-link"><a href="{%url 'logout'%}">LOGOUT</a></div>
+
+            </div>
+        </div>
+
+        <div id="app-main-section">
+            <div id="mini-nav" class="" onclick="toggle_navbar()">
+                <img src="{% static 'icons/hamburger.svg' %}" />
+            </div>
+            {% block body %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+    <div id="secondary-sidebar">
+        <div id="secondary-sidebar-heading">
+            <div id="secondary-sidebar-title">Add Student</div>
+            <div id="secondary-sidebar-close-btn" onclick="open_secodary_sidebar()">
+                <img src="{%static 'icons/close.svg'%}" width="100%">
+            </div>
+        </div>
+        <div id="secondary-sidebar-body">
+
+            <div id="student-form" class="my-form-container">
+                <form method="POST" action="{{action}}" class="student-form">
+                    {% csrf_token %}
+                   {{form.as_p}}
+
+                    <button type="submit" class="form-btn ASCG">{% if is_edit %} Edit {% else %} Add {% endif %}Student</button>
+                </form>
+            </div>
+
+            <div id="staff-form" class="my-form-container">
+                <form method="POST" action="{% url 'staff' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-input">
+                            <p>First Name</p>
+                            <input type="text" name="first_name" placeholder="John">
+                        </div>
+                        <div class="form-input">
+                            <p>Last Name</p>
+                            <input type="text" name="last_name" placeholder="Doe">
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <p>Staff ID</p>
+                        <input type="number" name="start_id" placeholder="John">
+                    </div>
+                    <div class="form-input">
+                        <p>Email</p>
+                        <input type="email" name="email" placeholder="john@doe.com">
+                    </div>
+                    <div class="form-input">
+                        <p>Phone number</p>
+                        <input type="number" maxlength="14" name="phone_number" placeholder="+234*****">
+                    </div>
+                    <div class="form-input">
+                        <p>Date Joined</p>
+                        <input type="date" name="date_joined">
+                    </div>
+                    <div class="form-input">
+                        <p>Position</p>
+                        <input type="text" name="position">
+                    </div>
+                    <div class="form-input">
+                        <p>Active</p>
+                        <select required name="active">
+                            <option value="1">YES</option>
+                            <option value="0">NO</option>
+                        </select>
+
+                    </div>
+                    <div class="form-input">
+                        <p>Skill</p>
+                        <input type="text" name="skill">
+                    </div>
+                    <div class="form-input">
+                        <p>Location</p>
+                        <input type="text" name="location">
+                    </div>
+                    <div class="form-input">
+                        <p>Addresss</p>
+                        <input type="text" name="address">
+                    </div>
+
+                    <button type="submit" class="form-btn ASCG">Add Staff</button>
+                </form>
+            </div>
+
+            <div class="my-form-container" id="grade-form">
+                <h1>Grade Form goes here</h1>
+            </div>
+            {%if student%}
+            <div class="my-form-container" id="program-form">
+                <h1>Add Program for {{ student.first_name }} {{ student.last_name }}</h1>
+                 <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Add Program</button>
+                </form>
+            </div>
+            {%endif%}
+
+            {%if staff%}
+            <div class="my-form-container" id="contact-form">
+                <h1>Add Emergency Contact for {{ staff.name }}</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ emergency_form.as_p }}
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+            {%endif%}
+
+            {%if volunteer%}
+            <div class="my-form-container" id="contact2-form">
+                <h1>Add Emergency Contact for {{ volunteer.first_name }}</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ emegency_form.as_p }}
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+            {%endif%}
+
+            <div class="my-form-container" id="volunteer-form">
+                <h1>volunteer form goes here</h1>
+                <form method="POST" action="{% url 'volunteers' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-input">
+                            <p>First Name</p>
+                            <input type="text" name="first_name" placeholder="John">
+                        </div>
+                        <div class="form-input">
+                            <p>Last Name</p>
+                            <input type="text" name="last_name" placeholder="Doe">
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <p>Email</p>
+                        <input type="email" name="email" placeholder="john@doe.com" required>
+                    </div>
+                    <div class="form-input">
+                        <p>Phone number</p>
+                        <input type="number" maxlength="14" name="phone_number" placeholder="+234*****" required>
+                    </div>
+                    <div class="form-input">
+                        <p>Start date</p>
+                        <input type="date" name="start_date" required>
+                    </div>
+                    <div class="form-input">
+                        <p>End Date</p>
+                        <input type="date" name="end_date" required>
+                    </div>
+                    <p>Program</p>
+                    <select name="program" multiple required>
+                            {% for program in programs %}
+                                <option value="{{ program.id }}">{{ program.name }}</option>
+                            {% endfor %}
+                        </select>
+                    <div class="form-input">
+                        <p>Location</p>
+                        <input type="text" name="location" required>
+                    </div>
+                    <button type="submit" class="form-btn ASCG">Add Volunteer</button>
+                </form>
+            </div>
+
+            <div class="my-form-container" id="sponsor-form">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{sponsor_form.as_p}}
+                    <br>
+                    <button class="form-btn ASCG">Add Sponsors</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="{%static 'scripts/base.js'%}"></script>
+    <script>
+        if ('{{form.errors}}'){
+            // open_secodary_sidebar('{{form_page}}')
+            history.pushState(null, null, document.referrer);
+        }
+    </script>
+</body>
+</html>

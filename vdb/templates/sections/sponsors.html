@@ -1,0 +1,97 @@
+{%extends 'pages/base.html'%}
+{%load static%}
+{% block body %}
+    <div class="details-heading-container">
+        <div class="details-heading">
+            Our Sponsors
+            <span id="grade-year">
+                <input placeholder="Current" id="year-val" value="{{year_val}}">
+                <div class="icon-container" onclick="">
+                    <img src="{% static 'icons/filter.png'%}" width="100%"/>
+                </div>
+            </span>
+        </div>
+        <div class="page-btn download-details" onclick="open_secodary_sidebar('sponsor-form')">ADD</div>
+    </div>
+
+    <div id="sponsors-container">
+
+
+            {% if sponsors %}
+                {% for sponsor in sponsors %}
+                    <div class="sponsor-container">
+                        <div class="">
+                            <img src="{{sponsor.logo.url}}" width="100%" alt="Sponsor Image">
+                        </div>
+                        <div class="">{{sponsor.name}}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h2>No Sponsors</h2>
+            {% endif %}
+
+
+            <!-- <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/e2_young-engineers.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/blue_camel-energy.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/access-bank.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/ACT-Foundation.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/cargill.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/cellulant.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/cinoteck.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/google.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'images/sponsors/intel.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div>
+            <div class="sponsor-container">
+                <div class="">
+                    <img src="{% static 'sponsors/schneider-electric.jpg' %}" alt="Sponsor Image">
+                </div>
+                <div class="">Sponsor</div>
+            </div> -->
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,317 @@
+{%extends 'pages/base.html'%}
+{%load static%}
+{% block body %}
+
+    <div id="details-container">
+        <div id="details-container-inner">
+            <div id="details-top">
+
+                <div id="details-top-left">
+                    <div id="back-btn-container" onclick="goBack()">
+                        <img src="{% static 'icons/back.png' %}" width="100%"/>
+                    </div>
+                    <div id="student-name"><h2>{{student.first_name|upper}} {{student.last_name|upper}}</h2></div>
+                </div>
+
+                <div id="details-top-right">
+                    <div class="page-btn ASCG" onclick="">DOWNLOAD</div>
+                </div>
+
+            </div>
+
+            <div id="details-body">
+                <div id="info-container">
+                    <div class="details-heading-container">
+                        <div class="details-heading">Info</div>
+                    </div>
+                    <div id="info-inner-container">
+                        <div class="info-field">
+                            <div class="info-field-label">First Name : </div>
+                            <div class="info-field-value">{{student.first_name|upper}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Last Name : </div>
+                            <div class="info-field-value">{{student.last_name|upper}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Date Of Birth : </div>
+                            <div class="info-field-value">{{student.date_of_birth}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Parents Name : </div>
+                            <div class="info-field-value">{{student.parents_name|upper}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Best Subjects : </div>
+                            <div class="info-field-value">{{student.best_subjects}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Worst Subject : </div>
+                            <div class="info-field-value">{{student.worst_subject}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Class : </div>
+                            <div class="info-field-value">{{student.student_class}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Name Of School : </div>
+                            <div class="info-field-value">{{student.school}}</div>
+                        </div>
+                    </div>
+
+                    <div class="details-heading">Contact</div>
+                    <div id="info-inner-container">
+                        <div class="info-field">
+                            <div class="info-field-label">Phone Number : </div>
+                            <div class="info-field-value">{{student.phone_number}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Email Address : </div>
+                            <div class="info-field-value">{%if student.email%}{{student.email}}{%else%}Not Provided{%endif%}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Parent Email Address : </div>
+                            <div class="info-field-value">{%if student.parent_email%}{{student.parent_email}}{%else%}Not Provided{%endif%}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">House Address : </div>
+                            <div class="info-field-value">{{student.house_address}}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="details-heading">Socials</div>
+                    <div id="info-inner-container">
+                        <div class="info-field">
+                            <div class="info-field-label">Twitter Handle : </div>
+                            <div class="info-field-value">Nil</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Facebook Handle : </div>
+                            <div class="info-field-value">Nil</div>
+                        </div>
+                    </div>
+
+                    <div id="student-btn">
+                        <div class="page-btn ASCG" onclick="">EDIT STUDENT PROFILE</div>
+                        <form method="post" action="{% url 'delete_student' student_id=student.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="page-btn CBC">DELETE STUDENT PROFILE</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div id="details-info-right">
+
+                    <div id="grades-container">
+
+                        <div class="details-heading-container">
+                            <div class="details-heading">
+                                Grades
+                                <span id="grade-year">
+                                    <input placeholder="Lastest" id="year-val" value="{{year_val}}">
+                                    <div class="icon-container" onclick="">
+                                        <img src="{% static 'icons/filter.png'%}" width="100%"/>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="page-btn download-details" onclick="open_secodary_sidebar('grade-form')">Edit</div>
+                        </div>
+                 
+                        <div id="grade-container">
+                            {%if student.English%}
+                            <div class="grade">
+                                <div class="subject">English</div>
+                                <div class="subject-grade-contaner">
+                                    <div class="subject-grade">{{student.English|upper}}</div>
+                                    <div class="grade-progress">
+                                        <div class="caret-container">
+                                            <img src="{% static 'icons/caret-up-green-icon.svg'%}" width="100%"/>
+                                        </div>
+                                        <div class="caret-container">
+                                            <img id="red" src="{% static 'icons/caret-down-icon.svg'%}" width="100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endif%}
+                            {%if student.Mathematics%}
+                            <div class="grade">
+                                <div class="subject">Mathematics</div>
+                                <div class="subject-grade-contaner">
+                                    <div class="subject-grade">{{student.Mathematics|upper}}</div>
+                                    <div class="grade-progress">
+                                        <div class="caret-container">
+                                            <img src="{% static 'icons/caret-up-icon.svg'%}" width="100%"/>
+                                        </div>
+                                        <div class="caret-container">
+                                            <img  src="{% static 'icons/caret-down-icon.svg'%}" width="100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endif%}
+                            {%if student.Physics%}
+                            <div class="grade">
+                                <div class="subject">Physics</div>
+                                <div class="subject-grade-contaner">
+                                    <div class="subject-grade">{{student.Physics|upper}}</div>
+                                    <div class="grade-progress">
+                                        <div class="caret-container">
+                                            <img src="{% static 'icons/caret-up-icon.svg'%}" width="100%"/>
+                                        </div>
+                                        <div class="caret-container">
+                                            <img id="red" src="{% static 'icons/caret-down-icon.svg'%}" width="100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endif%}
+                            {%if student.Chemistry%}
+                            <div class="grade">
+                                <div class="subject">Chemistry</div>
+                                <div class="subject-grade-contaner">
+                                    <div class="subject-grade">{{student.Chemistry|upper}}</div>
+                                    <div class="grade-progress">
+                                        <div class="caret-container">
+                                            <img src="{% static 'icons/caret-up-icon.svg'%}" width="100%"/>
+                                        </div>
+                                        <div class="caret-container">
+                                            <img id="red" src="{% static 'icons/caret-down-icon.svg'%}" width="100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endif%}
+                            {%if student.Biology%}
+                            <div class="grade">
+                                <div class="subject">Biology</div>
+                                <div class="subject-grade-contaner">
+                                    <div class="subject-grade">{{student.Biology|upper}}</div>
+                                    <div class="grade-progress">
+                                        <div class="caret-container">
+                                            <img src="{% static 'icons/caret-up-green-icon.svg'%}" width="100%"/>
+                                        </div>
+                                        <div class="caret-container">
+                                            <img id="red" src="{% static 'icons/caret-down-icon.svg'%}" width="100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endif%}
+                            {%if student.Civic%}
+                            <div class="grade">
+                                <div class="subject">Civic</div>
+                                <div class="subject-grade-contaner">
+                                    <div class="subject-grade">{{student.Civic|upper}}</div>
+                                    <div class="grade-progress">
+                                        <div class="caret-container">
+                                            <img src="{% static 'icons/caret-up-icon.svg'%}" width="100%"/>
+                                        </div>
+                                        <div class="caret-container">
+                                            <img id="red" src="{% static 'icons/caret-down-red-icon.svg'%}" width="100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endif%}
+                            {%if student.Economics%}
+                            <div class="grade">
+                                <div class="subject">Economics</div>
+                                <div class="subject-grade-contaner">
+                                    <div class="subject-grade">{{student.Economics|upper}}</div>
+                                    <div class="grade-progress">
+                                        <div class="caret-container">
+                                            <img src="{% static 'icons/caret-up-icon.svg'%}" width="100%"/>
+                                        </div>
+                                        <div class="caret-container">
+                                            <img id="red" src="{% static 'icons/caret-down-icon.svg'%}" width="100%"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endif%}
+                        </div>
+                    </div>
+
+                    {% if show_programs %}
+                    <div id="our-programs-container">
+                        <div class="details-heading-container">
+                            {% if programs_voluntered_for %}
+                                <div class="details-heading">Programs Volunteered For</div>
+                            {% else %}
+                                <div class="details-heading">Programs Attended</div>
+                            {% endif %}
+                            <div class="page-btn download-details" onclick="open_secodary_sidebar('program-form')">Add</div>
+                        </div>
+                        {%for program in student.program.all%}
+                        <div id="details-program-container">
+                            <div class="details-program">
+                                <div class="program-row">
+                                    <div class="program-name">{{program.name|upper}}{%if program.cohort%}-Cohort {{program.cohort}} {%endif%}</div>
+                                    <div class="program-duration">{{program.duration|upper}} </div>
+
+                                </div>
+                                <div class="program-row">
+                                    <div class="theme">{{program.topic|upper}}</div>
+                                    <form method="post" action="{% url 'delete_program' student_id=student.id program_id=program.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="page-btn download-details program-btn">REMOVE</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                    {% endif %}
+                    {% if show_emergency_contacts %}
+                    <div class="details-heading">Emergency Contacts</div>
+                    <div id="details-program-container">
+                        <div class="details-program">
+                            <div class="info-field">
+                                <div class="info-field-label">Name : </div>
+                                <div class="info-field-value">John Doe (Next Of Kin)</div>
+                            </div>
+                            <div class="info-field">
+                                <div class="info-field-label">Relation : </div>
+                                <div class="info-field-value">Brother</div>
+                            </div>
+                            <div class="info-field">
+                                <div class="info-field-label">Contact : </div>
+                                <div class="info-field-value">+234 9876 675</div>
+                            </div>
+                            <div class="contact-btn">
+                                <div class="page-btn download-details" onclick="open_secodary_sidebar('contact-form')">EDIT</div>
+                                <div class="page-btn download-details"  onclick="">REMOVE</div>
+                            </div>
+
+                        </div>
+
+                        <div class="details-program">
+                            <div class="info-field">
+                                <div class="info-field-label">Name : </div>
+                                <div class="info-field-value">James Doe</div>
+                            </div>
+                            <div class="info-field">
+                                <div class="info-field-label">Relation : </div>
+                                <div class="info-field-value">Brother</div>
+                            </div>
+                            <div class="info-field">
+                                <div class="info-field-label">Contact : </div>
+                                <div class="info-field-value">+234 9876 675</div>
+                            </div>
+                            <div class="contact-btn">
+                                <div class="page-btn download-details" onclick="open_secodary_sidebar('contact-form')">EDIT</div>
+                                <div class="page-btn download-details"  onclick="">REMOVE</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

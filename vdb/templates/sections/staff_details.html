@@ -1,0 +1,132 @@
+{%extends 'pages/base.html'%}
+{%load static%}
+{% block body %}
+
+    <div id="details-container">
+        <div id="details-container-inner">
+            <div id="details-top">
+
+                <div id="details-top-left">
+                    <div id="back-btn-container" onclick="goBack()">
+                        <img src="{% static 'icons/back.png' %}" width="100%"/>
+                    </div>
+                    <div id="student-name"><h2>{{staff.first_name|upper}} {{staff.last_name|upper}}</h2></div>
+                </div>
+
+                <div id="details-top-right">
+                    <div class="page-btn ASCG" onclick="">DOWNLOAD</div>
+                </div>
+
+            </div>
+
+            <div id="details-body">
+                <div id="info-container">
+                    <div class="details-heading-container">
+                        <div class="details-heading">Info</div>
+                    </div>
+                    <div id="info-inner-container">
+                        <div class="info-field">
+                            <div class="info-field-label">First Name : </div>
+                            <div class="info-field-value">{{staff.first_name}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Last Name : </div>
+                            <div class="info-field-value">{{staff.last_name}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Joined: </div>
+                            <div class="info-field-value">{{staff.date_joined}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Currrent Position : </div>
+                            <div class="info-field-value">{{staff.position}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Active </div>
+                            <div class="info-field-value">{%if staff.active == True%}Yes{%else%}No{%endif%}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Skills: </div>
+                            <div class="info-field-value">{{staff.skill}}</div>
+                        </div>
+
+                    </div>
+
+                    <div class="details-heading">Contact</div>
+                    <div id="info-inner-container">
+                        <div class="info-field">
+                            <div class="info-field-label">Phone Number : </div>
+                            <div class="info-field-value">{{staff.phone_number}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Email Address : </div>
+                            <div class="info-field-value">{{staff.email}}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">Location : </div>
+                            <div class="info-field-value">{{staff.location}}</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="info-field-label">House Address : </div>
+                            <div class="info-field-value">{{staff.address}}</div>
+                        </div>
+                    </div>
+
+                    <div id="student-btn">
+                        <div class="page-btn ASCG" onclick="">EDIT STUDENT PROFILE</div>
+                        <form method="post" action="{% url 'delete_staff' staff_id=staff.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="page-btn CBC">DELETE STAFF PROFILE</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div id="details-info-right">
+                    {% if show_emergency_contacts %}
+                    <div class="details-heading">Emergency Contacts</div>
+                    <div class="page-btn download-details" onclick="open_secodary_sidebar('contact-form')">Add</div>
+                    {% if emergency_contacts %}
+                        {% for emergency_contact in emergency_contacts %}
+                        <div id="details-program-container">
+                            <div class="details-program">
+                                <div class="info-field">
+                                    <div class="info-field-label">Name : </div>
+                                    <div class="info-field-value">{{ emergency_contact.name }}</div>
+                                </div>
+                                <div class="info-field">
+                                    <div class="info-field-label">Address: </div>
+                                    <div class="info-field-value">{{ emergency_contact.address }}</div>
+                                </div>
+                                <div class="info-field">
+                                    <div class="info-field-label">Phone : </div>
+                                    <div class="info-field-value">{{ emergency_contact.phone_number }}</div>
+                                </div>
+                                <div class="info-field">
+                                    <div class="info-field-label">Email : </div>
+                                    <div class="info-field-value">{%if emergency_contact.email%}{{ emergency_contact.email }}{%else%}Not Provided{%endif%}</div>
+                                </div>
+                                <div class="info-field">
+                                    <div class="info-field-label">Relationship: </div>
+                                    <div class="info-field-value">{{ emergency_contact.relationship }}</div>
+                                </div>
+                                <div class="contact-btn">
+                                    <form method="post" action="{% url 'delete_emergency_contact' staff_id=staff.id contact_id=emergency_contact.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="page-btn download-details program-btn">REMOVE</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    {% else %}
+                        <p>No emergency contacts found.</p>
+                    {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
